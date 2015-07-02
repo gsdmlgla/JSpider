@@ -171,7 +171,7 @@ class JSpiderJoint:
 				#case 6
 				return this.isNumberInBetween(this.maxAngle, this.minAngle, angleInDegree)
 
-	def isNumberInBetween(min, max, a):
+	def isNumberInBetween(this, min, max, a):
 		return min <= a and max > a
 	
 	#clamps given angle to max and min angle
