@@ -19,7 +19,7 @@ class Angle:
 		this.value = Angle.sanctify(this.value)
 	
 	@staticmethod
-	def sanctify(angleInDegree):
+	def sanctify(angle):
 		angleInDegree = angle % 360
 		if(angleInDegree < 0):
 			angleInDegree = 360 - angleInDegree
