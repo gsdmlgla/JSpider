@@ -157,14 +157,14 @@ class JSpiderJoint:
 	def isAngleInRange(this, angleInDegree):
 		angleInDegree = Angle.sanctify(angleInDegree) # case 3 and 4
 		if(this.minAngle < this.maxAngle):
-			if(minToMaxAngleVector > 0):
+			if(this.minToMaxAngleVector > 0):
 				#case 1
 				return this.isNumberInBetween(this.minAngle, this.maxAngle, angleInDegree)
 			else:
 				#case 2
 				return not this.isNumberInBetween(this.minAngle, this.maxAngle, angleInDegree)
 		else:
-			if(minToMaxAngleVector > 0):
+			if(this.minToMaxAngleVector > 0):
 				#case 5, flip min and max, and do case 2 chk. 
 				return not this.isNumberInBetween(this.maxAngle, this.minAngle, angleInDegree)
 			else:
