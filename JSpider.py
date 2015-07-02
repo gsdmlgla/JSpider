@@ -284,8 +284,10 @@ class CommandLineInterpreter:
 		this.spidy[this.rowId][this.legId][this.jointId].moveByAngle(val)
 		
 	def moveSpiderGraduallyByAngle(this, params):
-		val = float(params[1])
-		this.spidy[this.rowId][this.legId][this.jointId].graduallyMoveToAngle(val)
+		val1 = float(params[1])
+		val2 = float(params[2])
+		val3 = float(params[3])
+		this.spidy[this.rowId][this.legId][this.jointId].graduallyMoveToAngle(val1, val2, val3)
 
 	def setLegId(this, params):
 		val = int(params[1])
