@@ -27,11 +27,11 @@ class Angle:
 		
 	@staticmethod
 	def getAngleDistanceInForward(angleInDegreeFrom, angleInDegreeTo):
-		return abs(angleInDegreeTo - angleInDegreeFrom) if angleInDegreeTo > angleInDegreeFrom else abs((angleInDegreeTo + 360) - angleInDegreeTo)
+		return abs(angleInDegreeTo - angleInDegreeFrom) if angleInDegreeTo > angleInDegreeFrom else abs((angleInDegreeTo + 360) - angleInDegreeFrom)
 	
 	@staticmethod
 	def getAngleDistanceInBackward(angleInDegreeFrom, angleInDegreeTo):
-		return abs(angleInDegreeFrom - angleInDegreeTo) if angleInDegreeFrom > angleInDegreeTo else abs((angleInDegree + 360) - angleInDegreeTo)
+		return abs(angleInDegreeFrom - angleInDegreeTo) if angleInDegreeFrom > angleInDegreeTo else abs((angleInDegreeFrom + 360) - angleInDegreeTo)
 	
 	def setAngle(this, angle):
 		this.value = angle
@@ -180,8 +180,8 @@ class JSpiderJoint:
 		if(this.isAngleInRange(angleInDegree) is False):
 			forwardDistanceFromMinAngle = Angle.getAngleDistanceInForward(angleInDegree, this.minAngle)
 			forwardDistanceFromMaxAngle = Angle.getAngleDistanceInForward(angleInDegree, this.maxAngle)
-			backwardDistanceFromMinAngle = Angle.getAnlgeDistanceInBackward(angleInDegree, this.minAngle)
-			backwardDistanceFromMaxAngle = Angle.getAngleDistanceInForward(angleInDegree, this.maxAngle)
+			backwardDistanceFromMinAngle = Angle.getAngleDistanceInBackward(angleInDegree, this.minAngle)
+			backwardDistanceFromMaxAngle = Angle.getAngleDistanceInBackward(angleInDegree, this.maxAngle)
 			
 			distanceFromMinAngle = min(forwardDistanceFromMinAngle, backwardDistanceFromMinAngle)
 			distanceFromMaxAngle = max(forwardDistanceFromMaxAngle, backwardDistanceFromMaxAngle)
