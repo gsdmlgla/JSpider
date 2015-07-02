@@ -186,7 +186,7 @@ class JSpiderJoint:
 			backwardDistanceFromMaxAngle = Angle.getAngleDistanceInBackward(angleInDegree, this.maxAngle)
 			
 			distanceFromMinAngle = min(forwardDistanceFromMinAngle, backwardDistanceFromMinAngle)
-			distanceFromMaxAngle = max(forwardDistanceFromMaxAngle, backwardDistanceFromMaxAngle)
+			distanceFromMaxAngle = min(forwardDistanceFromMaxAngle, backwardDistanceFromMaxAngle)
 			
 			return this.minAngle if distanceFromMinAngle < distanceFromMaxAngle else this.maxAngle
 		else:
