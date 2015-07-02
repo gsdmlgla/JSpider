@@ -129,7 +129,7 @@ class JSpiderJoint:
 		rate = this.convertAngleToRate(angleInDegree)
 		this.moveByRate(rate)
 	
-	def graduallyMoveToAngle(this, targetAngle, duration, subdivde = 5):
+	def graduallyMoveToAngle(this, targetAngle, duration, subdivide = 5):
 		# this does not work because all points in between must be valid. 
 		# differences = targetAngle - currentAngle
 		# going to subdivide angles into multiple, and check if they are valid
