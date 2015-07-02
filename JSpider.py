@@ -178,10 +178,10 @@ class JSpiderJoint:
 	def clampAngle(this, angleInDegree):
 		angleInDegree = Angle.sanctify(angleInDegree)
 		if(this.isAngleInRange(angleInDegree) is False):
-			forwardDistanceFromMinAngle = getAngleDistanceInForward(angleInDegree, this.minAngle)
-			forwardDistanceFromMaxAngle = getAngleDistanceInForward(angleInDegree, this.maxAngle)
-			backwardDistanceFromMinAngle = getAnlgeDistanceInBackward(angleInDegree, this.minAngle)
-			backwardDistanceFromMaxAngle = getAngleDistanceInForward(angleInDegree, this.maxAngle)
+			forwardDistanceFromMinAngle = Angle.getAngleDistanceInForward(angleInDegree, this.minAngle)
+			forwardDistanceFromMaxAngle = Angle.getAngleDistanceInForward(angleInDegree, this.maxAngle)
+			backwardDistanceFromMinAngle = Angle.getAnlgeDistanceInBackward(angleInDegree, this.minAngle)
+			backwardDistanceFromMaxAngle = Angle.getAngleDistanceInForward(angleInDegree, this.maxAngle)
 			
 			distanceFromMinAngle = min(forwardDistanceFromMinAngle, backwardDistanceFromMinAngle)
 			distanceFromMaxAngle = max(forwardDistanceFromMaxAngle, backwardDistanceFromMaxAngle)
