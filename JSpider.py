@@ -152,7 +152,7 @@ class JSpiderJoint:
 		for x in range(0, int(subdivide)):
 			time.sleep(delayDuration)
 			currentRate = currentRate + dividedRateVector
-			moveByRate(currentRate)
+			this.moveByRate(currentRate)
 		
 	def isAngleInRange(this, angleInDegree):
 		angleInDegree = Angle.sanctify(angleInDegree) # case 3 and 4
