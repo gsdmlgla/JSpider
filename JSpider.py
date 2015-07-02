@@ -149,7 +149,7 @@ class JSpiderJoint:
 		currentRate = startRate
 		# this is bad because it will block other operations.
 		# should be async operation... or have general loop. 
-		for x in range(0, subdivide):
+		for x in range(0, int(subdivide)):
 			time.sleep(delayDuration)
 			currentRate = currentRate + dividedRateVector
 			moveByRate(currentRate)
