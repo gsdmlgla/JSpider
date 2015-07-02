@@ -16,10 +16,23 @@ class Angle:
 		return this.value;
 
 	def sanctify(this):
-		this.value = this.value % 360
-		if(this.value < 0):
-			this.value = 360 - this.value
+		this.value = Angle.sanctify(this.value)
+	
+	@staticmethod
+	def sanctify(angleInDegree):
+		angleInDegree = angle % 360
+		if(angleInDegree < 0):
+			angleInDegree = 360 - angleInDegree
+		return angleInDegree
 		
+	@staticmethod
+	def getAngleDistanceInForward(angleInDegreeFrom, angleInDegreeTo):
+		return abs(angleInDegreeTo - angleInDegreeFrom) if angleInDegreeTo > angleInDegreeFrom else abs((angleInDegreeTo + 360) - angleInDegreeTo)
+	
+	@staticmethod
+	def getAngleDistanceInBackward(angleInDegreeFrom, angleInDegreeTo):
+		return abs(angleInDegreeFrom - angleInDegreeTo) if angleInDegreeFrom > angleInDegreeTo else abs((angleInDegree + 360) - angleInDegreeTo)
+	
 	def setAngle(this, angle):
 		this.value = angle
 		sanctify()
@@ -37,33 +50,69 @@ class JSpiderJoint:
 	port = 0
 	minimumPower = 300
 	maximumPower = 600
-	minimumToMaximumPowerVector = 0
+	minToMaxPowerVector = 0
 	
-	minimumAngle = 0
-	maximumAngle = 0
-	minimumToMaximumAngleVector = 0
+	minAngle = 0
+	maxAngle = 0
+	minToMaxAngleVector = 0
+
+	currentPower = 0
+	currentRate = 0
+	currentAngle = 0
 	
-	increaseToReach = False
 	
 	def __init__(this, port, minPower, maxPower, minMappedDegree = 0, maxMappedDegree = 0, doesIncreaseToReachMax = False):
 		this.port = port
 		this.minimumPower = minPower
 		this.maximumPower = maxPower
-		this.minimumAngle = Angle(minMappedDegree)
-		this.maximumAngle = Angle(maxMappedDegree)
-		this.minimumToMaximumPowerVector = maxPower - minPower
-		if(doesIncreaseToReachMax):
-			if(this.maximumAngle.getAngle()
-			this.minimumToMaximumAngleVector = this.maximumAngle.getAngle() - this.minimumAngle.getAngle()
-		this.increaseToReach = doesIncreaseToReachMax
+		this.minToMaxPowerVector = maxPower - minPower
+
+		# I assume that values are already in range of 0 to 360. 
+		this.minAngle = minMappedDegree#Angle(minMappedDegree)
+		this.maxAngle = maxMappedDegree#Angle(maxMappedDegree)
+		
+		# This will make decreasing vector less than or equal to 0, increasing vector more than 0.
+		if(doesIncreaseToReachMax): #increasing
+			if(minMappedDegree < maxMappedDegree):
+				this.minToMaxAngleVector = maxMappedDegree - minMappedDegree;
+			else:
+				this.minToMaxAngleVector = (maxMappedDegree + 360) - minMappedDegree
+		else: #decreasing
+			if(minMappedDegree < maxMappedDegree):
+				this.minToMaxAngleVector = maxMappedDegree - (minMappedDegree + 360);
+			else:
+				this.minToMaxAngleVector = maxMappedDegree - minMappedDegree
 	
 	def move(this, inputPower):
 		power = min(max(inputPower, this.minimumPower), this.maximumPower)
+		this.setCurrentPower(inputPower)
 		if this.isPinPort(this.port):
 			call("echo " + str(-this.port) + "=" + str(power) + ">/dev/servoblaster", shell=True)
 		else:
 			pwm.setPWM(this.port, 0, power)
 	
+	def setCurrentPower(this, inputPower):
+		currentPower = inputPower
+		currentRate = this.convertPowerToRate(currentPower)
+		currentAngle = this.convertRateToAngle(currentRate)
+	
+	def convertRateToPower(this, rate):
+		clampedRate = max(min(rate, 1), 0)
+		return (int(this.minimumPower + this.minToMaxPowerVector * clampedRate))
+	
+	def convertPowerToRate(this, power):
+		clampedRate = (this.minimumPower - power) / this.minToMaxPowerVector
+		return clampedRate;
+	
+	def convertRateToAngle(this, rate):
+		clampedAngle = rate * this.minToMaxAngleVector + this.minAngle
+		return clampedAngle
+	
+	def convertAngleToRate(this, angle):
+		clampedAngle = this.clampAngle(angleInDegree)
+		rate = (clampedAngle - this.minAngle) / this.minToMaxAngleVector
+		return rate
+		
 	def stop(this):
 		if this.isPinPort(this.port):
 			call("echo " + str(-this.port) + "=" + str(0) + ">/dev/servoblaster", shell=True)
@@ -71,11 +120,75 @@ class JSpiderJoint:
 			pwm.setPWM(this.port, 0, 0)
 	
 	def isPinPort(this, port):
-		return port < 0;
+		return port < 0
 	
 	def moveByRate(this, rate):
-		clampedRate = max(min(rate, 1), 0)
-		this.move(int(this.minimumPower + this.minimumToMaximumPowerVector * clampedRate))
+		this.move(this.convertRateToPower(rate))
+	
+	def moveByAngle(this, angleInDegree):
+		rate = this.convertAngleToRate(angleInDegree)
+		this.moveByRate(rate)
+	
+	def graduallyMoveToAngle(this, targetAngle, duration, subdivde = 5):
+		# this does not work because all points in between must be valid. 
+		# differences = targetAngle - currentAngle
+		# going to subdivide angles into multiple, and check if they are valid
+		# subdivide could work in most cases, but it doesn't work if dead angle is very tiny. 
+		# should have more solid algorithm for detecting correct angle...
+		
+		# min to max angle vector already have it figured out
+		# so i should use find current rate, and find target rate, and get vector. 
+		startRate = this.currentRate
+		targetRate = this.convertAngleToRate(targetAngle)
+		
+		# so i can subdivide this rate!
+		rateVector = targetRate - startRate
+		dividedRateVector = rateVector / subdivide
+		delayDuration = duration / subdivide
+		
+		currentRate = startRate
+		# this is bad because it will block other operations.
+		# should be async operation... or have general loop. 
+		for x in range(0, subdivide):
+			time.sleep(delayDuration)
+			currentRate = currentRate + dividedRateVector
+			moveByRate(currentRate)
+		
+	def isAngleInRange(this, angleInDegree):
+		angleInDegree = Angle.sanctify(angleInDegree) # case 3 and 4
+		if(this.minAngle < this.maxAngle):
+			if(minToMaxAngleVector > 0):
+				#case 1
+				return this.isNumberInBetween(this.minAngle, this.maxAngle, angleInDegree)
+			else:
+				#case 2
+				return not this.isNumberInBetween(this.minAngle, this.maxAngle, angleInDegree)
+		else:
+			if(minToMaxAngleVector > 0):
+				#case 5, flip min and max, and do case 2 chk. 
+				return not this.isNumberInBetween(this.maxAngle, this.minAngle, angleInDegree)
+			else:
+				#case 6
+				return this.isNumberInBetween(this.maxAngle, this.minAngle, angleInDegree)
+
+	def isNumberInBetween(min, max, a):
+		return min <= a and max > a
+	
+	#clamps given angle to max and min angle
+	def clampAngle(this, angleInDegree):
+		angleInDegree = Angle.sanctify(angleInDegree)
+		if(this.isAngleInRange(angleInDegree) is False):
+			forwardDistanceFromMinAngle = getAngleDistanceInForward(angleInDegree, this.minAngle)
+			forwardDistanceFromMaxAngle = getAngleDistanceInForward(angleInDegree, this.maxAngle)
+			backwardDistanceFromMinAngle = getAnlgeDistanceInBackward(angleInDegree, this.minAngle)
+			backwardDistanceFromMaxAngle = getAngleDistanceInForward(angleInDegree, this.maxAngle)
+			
+			distanceFromMinAngle = min(forwardDistanceFromMinAngle, backwardDistanceFromMinAngle)
+			distanceFromMaxAngle = max(forwardDistanceFromMaxAngle, backwardDistanceFromMaxAngle)
+			
+			return this.minAngle if distanceFromMinAngle < distanceFromMaxAngle else this.maxAngle
+		else:
+			return angleInDegree
 	
 
 class JSpiderLeg:
@@ -105,6 +218,7 @@ class JSpiderLeg:
 			return this.tip
 		raise IndexError("JSpiderLeg only has 3 joints")
 		
+	
 class JSpider:
 	fl_leg = 0
 	fr_leg = 0
@@ -165,6 +279,13 @@ class CommandLineInterpreter:
 		val = float(params[1])
 		this.spidy[this.rowId][this.legId][this.jointId].moveByRate(val)
 
+	def moveSpiderByAngle(this, params):
+		val = float(params[1])
+		this.spidy[this.rowId][this.legId][this.jointId].moveByAngle(val)
+		
+	def moveSpiderGraduallyByAngle(this, params):
+		val = float(params[1])
+		this.spidy[this.rowId][this.legId][this.jointId].graduallyMoveToAngle(val)
 
 	def setLegId(this, params):
 		val = int(params[1])
@@ -187,6 +308,10 @@ class CommandLineInterpreter:
 			this.moveSpider(params)
 		elif option == "movef" or option == "mf":
 			this.moveSpiderByRate(params)
+		elif option == "movea" or option == "ma":
+			this.moveSpiderByAngle(params)
+		elif option == "moveag" or option == "mg":
+			this.moveSpiderGraduallyByAngle(params)
 		elif option == "setlegid" or option == "setleg" or option == "sl" or option == "leg":
 			this.setLegId(params)
 		elif option == "setjointid" or option == "setjoint" or option == "sj" or option == "joint":
