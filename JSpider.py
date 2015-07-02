@@ -110,6 +110,8 @@ class JSpiderJoint:
 	
 	def convertAngleToRate(this, angleInDegree):
 		clampedAngle = this.clampAngle(angleInDegree)
+		while(clampedAngle > this.minAngle):
+			clampedAngle = clampedAngle - 360
 		rate = (clampedAngle - this.minAngle) / this.minToMaxAngleVector
 		return rate
 		
@@ -340,5 +342,4 @@ except KeyboardInterrupt:
 	call("echo 4=0 > /dev/servoblaster", shell=True)
 	pwm = PWM(0x40)
 	pwm.setPWMFreq(60)
-
 
