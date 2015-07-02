@@ -27,11 +27,11 @@ class Angle:
 		
 	@staticmethod
 	def getAngleDistanceInForward(angleInDegreeFrom, angleInDegreeTo):
-		return abs(angleInDegreeTo - angleInDegreeFrom) if angleInDegreeTo > angleInDegreeFrom else abs((angleInDegreeTo + 360) - angleInDegreeFrom)
+		return abs(angleInDegreeTo - angleInDegreeFrom) if angleInDegreeTo > angleInDegreeFrom else abs((angleInDegreeTo + 360) - angleInDegreeFrom) % 360
 	
 	@staticmethod
 	def getAngleDistanceInBackward(angleInDegreeFrom, angleInDegreeTo):
-		return abs(angleInDegreeFrom - angleInDegreeTo) if angleInDegreeFrom > angleInDegreeTo else abs((angleInDegreeFrom + 360) - angleInDegreeTo)
+		return abs(angleInDegreeFrom - angleInDegreeTo) if angleInDegreeFrom > angleInDegreeTo else abs((angleInDegreeFrom + 360) - angleInDegreeTo) % 360
 	
 	def setAngle(this, angle):
 		this.value = angle
@@ -304,7 +304,6 @@ class CommandLineInterpreter:
 		this.rowId = val
 		
 		
-
 	def interpretCommand(this, cmd):
 		params = cmd.split()
 		option = params[0]
