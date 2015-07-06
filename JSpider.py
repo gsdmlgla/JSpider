@@ -242,7 +242,7 @@ class JSpiderLeg:
 		
 		yVectorOnPlane = Vector3.project(root2EEDirection, [0, 0, 1])
 		xVectorOnPlane = Vector3.subtract(root2EEDirection, yVectorOnPlane)
-		y = (1 if yVectorOnPlane.z > 0 else -1) * Vector3.length(yVectorOnPlane)
+		y = (1 if yVectorOnPlane[2] > 0 else -1) * Vector3.length(yVectorOnPlane)
 		planarAngleFromRootToEEInRadius = math.atan2(y, Vector3.length(xVectorOnPlane))
 		
 		# joint length
