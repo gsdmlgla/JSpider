@@ -298,7 +298,7 @@ class Vector3:
 	
 	@staticmethod
 	def direction(origin, destination):
-		return subtract(destination, origin)
+		return Vector3.subtract(destination, origin)
 		
 	@staticmethod
 	def project(vec, dir):
