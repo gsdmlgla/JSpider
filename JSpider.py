@@ -310,7 +310,7 @@ class Vector3:
 		yUnit = 0 if normalized[1] is 0 else dir[1] / normalized[1]
 		zUnit = 0 if normalized[2] is 0 else dir[2] / normalized[2]
 		
-		return scale(dir, Vector3.dot(dir, vec) / math.pow(Vector3.length(dir), 2))
+		return Vector3.scale(dir, Vector3.dot(dir, vec) / math.pow(Vector3.length(dir), 2))
 		
 		
 	@staticmethod
@@ -328,10 +328,7 @@ class Vector3:
 	def normalize(vec):
 		length = Vector3.length(vec)
 		normalizedVector = Vector3(vec[0], vec[1], vec[2])
-		normalizedVector.x /= length
-		normalizedVector.y /= length
-		normalizedVector.z /= length
-		return normalizedVector
+		return Vector3.scale(normalizedVector, length)
 		
 	@staticmethod
 	def length(vec):
