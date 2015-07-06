@@ -238,9 +238,9 @@ class JSpiderLeg:
 		# just like simulation assumes that root is always at 0
 		root2EEDirection = Vector3.direction(rootPosition, EEPosition)
 		
-		joint0AngleInRadius = math.atan2(root2EEDirection.y, root2EEDirection.x)
+		joint0AngleInRadius = math.atan2(root2EEDirection[1], root2EEDirection[0])
 		
-		yVectorOnPlane = Vector3.project(root2EEDirection.y, root2EEDirection.x)
+		yVectorOnPlane = Vector3.project(root2EEDirection[1], root2EEDirection[0])
 		xVectorOnPlane = root2EEDirection - yVectorOnPlane
 		y = (1 if yVectorOnPlane.z > 0 else -1) * Vector3.length(yVectorOnPlane)
 		planarAngleFromRootToEEInRadius = math.atan2(y, Vector3.length(xVectorOnPlane))
