@@ -306,9 +306,9 @@ class Vector3:
 		# to project, needs to break down into components. 
 		normalized = Vector3.normalize(vec)
 
-		xUnit = 0 if normalized[0] is 0 else dir[0] / normalized[0]
-		yUnit = 0 if normalized[1] is 0 else dir[1] / normalized[1]
-		zUnit = 0 if normalized[2] is 0 else dir[2] / normalized[2]
+		xUnit = 0 if normalized[0] == 0 else dir[0] / normalized[0]
+		yUnit = 0 if normalized[1] == 0 else dir[1] / normalized[1]
+		zUnit = 0 if normalized[2] == 0 else dir[2] / normalized[2]
 		
 		return Vector3.scale(dir, Vector3.dot(dir, vec) / math.pow(Vector3.length(dir), 2))
 		
