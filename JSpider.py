@@ -261,6 +261,10 @@ class JSpiderLeg:
 		this.bas.moveByAngle(joint0Angle)
 		this.mid.moveByAngle(joint1Angle)
 		this.tip.moveByAngle(joint2Angle)
+		
+		print "joint0Angle: " + joint0Angle
+		print "joint1Angle: " + joint1Angle
+		print "joint2Angle: " + joint2Angle
 		# this.bas.graduallyMoveToAngle(joint0Angle, 1, 5)
 		# this.mid.graduallyMoveToAngle(joint1Angle, 1, 5)
 		# this.tip.graduallyMoveToAngle(joint2Angle, 1, 5)
