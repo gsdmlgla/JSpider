@@ -3,6 +3,7 @@ from subprocess import call
 import pygame
 import time
 import sys
+import math
 
 pwm = PWM(0x40)
 pwm.setPWMFreq(60)
