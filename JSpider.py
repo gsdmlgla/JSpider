@@ -111,7 +111,6 @@ class JSpiderJoint:
 	
 	def convertAngleToRate(this, angleInDegree):
 		clampedAngle = this.clampAngle(angleInDegree)
-		print "angle " + str(angleInDegree) + " got clamped as " + str(clampedAngle)
 		while(clampedAngle > this.minAngle):
 			clampedAngle = clampedAngle - 360
 		rate = (clampedAngle - this.minAngle) / this.minToMaxAngleVector
@@ -250,10 +249,14 @@ class JSpiderLeg:
 		a1 = 7.5
 		a2 = 10.5
 		D = Vector3.length(root2EEDirection)
-		cosVal = -(math.pow(a2, 2) - math.pow(a1, 2) - math.pow(D, 2)) / (2 * a1 * D)
-		joint1AngleInRadius = math.acos(min(1, max(cosVal, -1)) + planarAngleFromRootToEEInRadius
-		cosVal1 = -(math.pow(D, 2) - math.pow(a1, 2) - math.pow(a2, 2)) / (2 * a1 * a2)
-		angle2 = math.acos(min(1, max(cosVal1, -1)))
+		
+		
+		cosVal = (-(math.pow(a2, 2) - math.pow(a1, 2) - math.pow(D, 2)) / (2 * a1 * D)
+		cosVal = min(max(cosVal, -1), 1)
+		joint1AngleInRadius = math.acos(cosVal) + planarAngleFromRootToEEInRadius
+		cosVal = -(math.pow(D, 2) - math.pow(a1, 2) - math.pow(a2, 2)) / (2 * a1 * a2)
+		cosVal = min(max(cosVal, -1), 1)
+		angle2 = math.acos(cosVal)
 		joint2AngleInRadius = angle2 - 3.14159265358979
 		
 		joint0Angle = math.degrees(joint0AngleInRadius)
