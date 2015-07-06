@@ -219,7 +219,124 @@ class JSpiderLeg:
 		if index is 2:
 			return this.tip
 		raise IndexError("JSpiderLeg only has 3 joints")
+	
+	def moveByEndEffectorPosition(this, EEPosition):
+		# assumes that root position is at 0 0 0, 
+		# assumes that z axis represents up and down movement
+		# and y axis represents forward and backward movement
+		# and x axis represents left and right movement
+		rootPosition = { 0, 0, 0 }
 		
+		#joint 0 is the first joint that rotates joint 2 and 3 around z axis. 
+		joint0Angle = 0
+		#joint 1 is the second joint that rotates joint 3 around y axis relative to joint 0. 
+		joint1Angle = 0
+		#joint 2 is the last joint that rotates EE around y axis relative to joint 1. 
+		joint2Angle = 0
+
+		# just like simulation assumes that root is always at 0
+		root2EEDirection = Vector3.direction(rootPosition, EEPosition)
+		
+		joint0AngleInRadius = math.atan2(root2EEDirection.y, root2EEDirection.x)
+		
+		yVectorOnPlane = Vector3.project(root2EEDirection.y, root2EEDirection.x)
+		xVectorOnPlane = root2EEDirection - yVectorOnPlane
+		y = (1 if yVectorOnPlane.z > 0 else -1) * Vector3.length(yVectorOnPlane)
+		planarAngleFromRootToEEInRadius = math.atan2(y, Vector3.length(xVectorOnPlane))
+		
+		# joint length
+		a1 = 7.5
+		a2 = 10.5
+		D = Vector3.length(root2EEDirection)
+		
+		joint1AngleInRadius = math.acos(-(math.pow(a2, 2) - math.pow(a1, 2) - math.pow(D, 2)) / (2 * a1 * D)) + planarAngleFromRootToEEInRadius
+		angle2 = math.acos(-(math.pow(D, 2) - math.pow(a1, 2) - math.pow(a2, 2)) / (2 * a1 * a2))
+		joint2AngleInRadius = angle2 - 3.14159265358979
+		
+		joint0Angle = math.degrees(joint0AngleInRadius)
+		joint1Angle = math.degrees(joint1AngleInRadius)
+		joint2Angle = math.degrees(joint2AngleInRadius)
+		
+		# this.bas.moveByAngle(joint0Angle)
+		# this.mid.moveByAngle(joint1Angle)
+		# this.tip.moveByAngle(joint2Angle)
+		this.bas.graduallyMoveToAngle(joint0Angle, 1, 5)
+		this.mid.graduallyMoveToAngle(joint1Angle, 1, 5)
+		this.tip.graduallyMoveToAngle(joint2Angle, 1, 5)
+
+# it is ok to use array to calculate with vector3 for convinicance. 
+class Vector3:
+	x = 0
+	y = 0
+	z = 0
+	
+	def __init__(this, x, y, z):
+		this.x = x
+		this.y = y
+		this.z = z
+		
+	def __getitem__(this, index):
+		if index is 0:
+			return this.x
+		if index is 1:
+			return this.y
+		if index is 2:
+			return this.z
+		raise IndexError("Vector3 has only 3 axis")
+		
+	@staticmethod
+	def add(vec1, vec2):
+		return { vec1[0] + vec2[0], vec1[1] + vec[1], vec1[2] + vec2[2] }
+	
+	@staticmethod
+	def scale(v, scale):
+		return { v[0] * scale, v[1] * scale, v[2] * scale }
+	
+	@staticmethod
+	def subtract(vec1, vec2):
+		return { vec1[0] - vec2[0], vec1[1] - vec[1], vec1[2] - vec2[2] }
+	
+	@staticmethod
+	def direction(origin, destination):
+		return subtract(destination, origin)
+		
+	@staticmethod
+	def project(vec, dir):
+		# to project, needs to break down into components. 
+		normalized = Vector3.normalize(vec)
+
+		xUnit = 0 if normalized.x is 0 else dir.x / normalized.x
+		yUnit = 0 if normalized.y is 0 else dir.y / normalized.y
+		zUnit = 0 if normalized.z is 0 else dir.z / normalized.z
+		
+		return scale(dir, Vector3.dot(dir, vec) / math.pow(Vector3.length(dir), 2))
+		
+		
+	@staticmethod
+	def angleBetweenVector(v1, v2):
+		dot = Vector3.dot(v1, v2)
+		angle = math.acos(dot)
+		return angle
+	
+	@staticmethod
+	def dot(v1, v2):
+		return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2]
+		
+
+	@staticmethod
+	def normalize(vec):
+		length = Vector3.length(vec)
+		normalizedVector = Vector3(vec[0], vec[1], vec[2])
+		normalizedVector.x /= length
+		normalizedVector.y /= length
+		normalizedVector.z /= length
+		return normalizedVector
+		
+	@staticmethod
+	def length(vec):
+		return math.sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z)
+		
+	
 	
 class JSpider:
 	fl_leg = 0
@@ -251,7 +368,9 @@ class JSpider:
 		215, 170, 350, 65, 40, 200,
 		False, True, False)
 		this.legs = [[this.fl_leg, this.fr_leg] , [this.cl_leg, this.cr_leg], [this.bl_leg, this.br_leg]]
-		
+	
+	
+	
 	def __getitem__(this, index):
 		return this.legs[index];
 		
