@@ -410,6 +410,13 @@ class CommandLineInterpreter:
 		val3 = float(params[3])
 		this.spidy[this.rowId][this.legId][this.jointId].graduallyMoveToAngle(val1, val2, val3)
 
+	def moveSpiderLegTip(this, params):
+		val1 = float(params[1])
+		val2 = float(params[2])
+		val3 = float(params[3])
+		val = {val1, val2, val3}
+		this.spidy[this.rowId][this.legId].moveByEndEffectorPosition(val)
+		
 	def setLegId(this, params):
 		val = int(params[1])
 		this.legId = val
@@ -434,6 +441,8 @@ class CommandLineInterpreter:
 			this.moveSpiderByAngle(params)
 		elif option == "moveag" or option == "mg":
 			this.moveSpiderGraduallyByAngle(params)
+		elif option == "movetip" or option == "mt":
+			this.moveSpiderLegTip(params)
 		elif option == "setlegid" or option == "setleg" or option == "sl" or option == "leg":
 			this.setLegId(params)
 		elif option == "setjointid" or option == "setjoint" or option == "sj" or option == "joint":
