@@ -251,7 +251,7 @@ class JSpiderLeg:
 		D = Vector3.length(root2EEDirection)
 		
 		
-		cosVal = (-(math.pow(a2, 2) - math.pow(a1, 2) - math.pow(D, 2)) / (2 * a1 * D)
+		cosVal = -(math.pow(a2, 2) - math.pow(a1, 2) - math.pow(D, 2)) / (2 * a1 * D)
 		cosVal = min(max(cosVal, -1), 1)
 		joint1AngleInRadius = math.acos(cosVal) + planarAngleFromRootToEEInRadius
 		cosVal = -(math.pow(D, 2) - math.pow(a1, 2) - math.pow(a2, 2)) / (2 * a1 * a2)
