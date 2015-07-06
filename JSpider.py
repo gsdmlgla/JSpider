@@ -258,12 +258,12 @@ class JSpiderLeg:
 		joint1Angle = math.degrees(joint1AngleInRadius)
 		joint2Angle = math.degrees(joint2AngleInRadius)
 		
-		# this.bas.moveByAngle(joint0Angle)
-		# this.mid.moveByAngle(joint1Angle)
-		# this.tip.moveByAngle(joint2Angle)
-		this.bas.graduallyMoveToAngle(joint0Angle, 1, 5)
-		this.mid.graduallyMoveToAngle(joint1Angle, 1, 5)
-		this.tip.graduallyMoveToAngle(joint2Angle, 1, 5)
+		this.bas.moveByAngle(joint0Angle)
+		this.mid.moveByAngle(joint1Angle)
+		this.tip.moveByAngle(joint2Angle)
+		# this.bas.graduallyMoveToAngle(joint0Angle, 1, 5)
+		# this.mid.graduallyMoveToAngle(joint1Angle, 1, 5)
+		# this.tip.graduallyMoveToAngle(joint2Angle, 1, 5)
 
 # it is ok to use array to calculate with vector3 for convinicance. 
 class Vector3:
