@@ -306,9 +306,9 @@ class Vector3:
 		# to project, needs to break down into components. 
 		normalized = Vector3.normalize(vec)
 
-		xUnit = 0 if normalized.x is 0 else dir.x / normalized.x
-		yUnit = 0 if normalized.y is 0 else dir.y / normalized.y
-		zUnit = 0 if normalized.z is 0 else dir.z / normalized.z
+		xUnit = 0 if normalized.x is 0 else dir[0] / normalized[0]
+		yUnit = 0 if normalized.y is 0 else dir[1] / normalized[1]
+		zUnit = 0 if normalized.z is 0 else dir[2] / normalized[2]
 		
 		return scale(dir, Vector3.dot(dir, vec) / math.pow(Vector3.length(dir), 2))
 		
@@ -335,7 +335,7 @@ class Vector3:
 		
 	@staticmethod
 	def length(vec):
-		return math.sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z)
+		return math.sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2])
 		
 	
 	
