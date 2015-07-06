@@ -225,7 +225,7 @@ class JSpiderLeg:
 		# assumes that z axis represents up and down movement
 		# and y axis represents forward and backward movement
 		# and x axis represents left and right movement
-		rootPosition = { 0, 0, 0 }
+		rootPosition = [ 0, 0, 0 ]
 		
 		#joint 0 is the first joint that rotates joint 2 and 3 around z axis. 
 		joint0Angle = 0
@@ -290,11 +290,11 @@ class Vector3:
 	
 	@staticmethod
 	def scale(v, scale):
-		return { v[0] * scale, v[1] * scale, v[2] * scale }
+		return [ v[0] * scale, v[1] * scale, v[2] * scale ]
 	
 	@staticmethod
 	def subtract(vec1, vec2):
-		return { vec1[0] - vec2[0], vec1[1] - vec2[1], vec1[2] - vec2[2] }
+		return [ vec1[0] - vec2[0], vec1[1] - vec2[1], vec1[2] - vec2[2] ]
 	
 	@staticmethod
 	def direction(origin, destination):
@@ -414,7 +414,7 @@ class CommandLineInterpreter:
 		val1 = float(params[1])
 		val2 = float(params[2])
 		val3 = float(params[3])
-		val = {val1, val2, val3}
+		val = [val1, val2, val3]
 		this.spidy[this.rowId][this.legId].moveByEndEffectorPosition(val)
 		
 	def setLegId(this, params):
