@@ -252,10 +252,10 @@ class JSpiderLeg:
 		
 		
 		cosVal = -(math.pow(a2, 2) - math.pow(a1, 2) - math.pow(D, 2)) / (2 * a1 * D)
-		cosVal = min(max(cosVal, -1), 1)
+		# cosVal = min(max(cosVal, -1), 1)
 		joint1AngleInRadius = math.acos(cosVal) + planarAngleFromRootToEEInRadius
 		cosVal = -(math.pow(D, 2) - math.pow(a1, 2) - math.pow(a2, 2)) / (2 * a1 * a2)
-		cosVal = min(max(cosVal, -1), 1)
+		# cosVal = min(max(cosVal, -1), 1)
 		angle2 = math.acos(cosVal)
 		joint2AngleInRadius = angle2 - 3.14159265358979
 		
