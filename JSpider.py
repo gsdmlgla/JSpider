@@ -368,7 +368,7 @@ class JSpider:
 	legs = [ ]
 	
 	def __init__(this):
-	'''
+'''
 		old safer value. going to unleash the true power!
 		noticed that power value for last 2 joints are missing...
 		this.fl_leg = JSpiderLeg(0, 2, 4, 400, 650, 300, 600, 200, 600, 
@@ -389,7 +389,7 @@ class JSpider:
 		this.br_leg = JSpiderLeg(13, 15, -4, 150, 400, 200, 600, 
 		215, 170, 350, 65, 40, 200,
 		False, True, False)
-	'''
+'''
 		this.fl_leg = JSpiderLeg(0, 2, 4, 300, 750, 200, 700, 100, 700, 
 		50, 330, 40, 290, 330, 0, 
 		False, False, False)
