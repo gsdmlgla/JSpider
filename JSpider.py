@@ -115,6 +115,7 @@ class JSpiderJoint:
 		while(clampedAngle > this.minAngle):
 			clampedAngle = clampedAngle - 360
 		rate = (clampedAngle - this.minAngle) / this.minToMaxAngleVector
+		print "angle " + str(clampedAngle) + " converted to rate " + str(rate)
 		return rate
 		
 	def stop(this):
