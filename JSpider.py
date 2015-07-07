@@ -370,7 +370,7 @@ class JSpider:
 	def __init__(this):
 		this.fl_leg = JSpiderLeg(0, 2, 4, 400, 650, 300, 600, 200, 600, 
 		50, 330, 40, 290, 220, 0, 
-		False, False, True)
+		False, False, False)
 		this.fr_leg = JSpiderLeg(1, 3, 5, 150, 400, 200, 500, 200, 600, 
 		205, 130, 285, 35, 10, 225, 
 		False, True, False)
