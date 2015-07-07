@@ -368,6 +368,9 @@ class JSpider:
 	legs = [ ]
 	
 	def __init__(this):
+	"""
+		old safer value. going to unleash the true power!
+		noticed that power value for last 2 joints are missing...
 		this.fl_leg = JSpiderLeg(0, 2, 4, 400, 650, 300, 600, 200, 600, 
 		50, 330, 40, 290, 330, 0, 
 		False, False, False)
@@ -386,6 +389,26 @@ class JSpider:
 		this.br_leg = JSpiderLeg(13, 15, -4, 150, 400, 200, 600, 
 		215, 170, 350, 65, 40, 200,
 		False, True, False)
+	"""
+		this.fl_leg = JSpiderLeg(0, 2, 4, 300, 750, 200, 700, 100, 700, 
+		50, 330, 40, 290, 330, 0, 
+		False, False, False)
+		this.fr_leg = JSpiderLeg(1, 3, 5, 50, 500, 100, 600, 100, 700, 
+		205, 130, 285, 35, 10, 225, 
+		False, True, False)
+		this.cl_leg = JSpiderLeg(6, 8, 10, 300, 700, 200, 700, 100, 700, 
+		30, 340, 40, 285, 225, 10, 
+		False, False, True)
+		this.cr_leg = JSpiderLeg(7, 9, 11, 100, 500, 100, 600, 100, 700, 
+		190, 130, 295, 25, 15, 260,
+		False, True, False)
+		this.bl_leg = JSpiderLeg(12, 14, -1, 200, 700, 200, 700, 0, 1000,
+		50, 290, 40, 300, 200, 40, 
+		False, False, True)
+		this.br_leg = JSpiderLeg(13, 15, -4, 50, 500, 100, 700, 0, 1000,
+		215, 170, 350, 65, 40, 200,
+		False, True, False)
+		
 		this.legs = [[this.fl_leg, this.fr_leg] , [this.cl_leg, this.cr_leg], [this.bl_leg, this.br_leg]]
 	
 	
