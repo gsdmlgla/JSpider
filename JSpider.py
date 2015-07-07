@@ -117,7 +117,7 @@ class JSpiderJoint:
 		#	clampedAngle = clampedAngle - 360
 		if(this.minToMaxAngleVector > 0 and clampedAngle < this.minAngle):
 			clampedAngle = clampedAngle + 360
-		if(this.minToMAxAngleVector < 0 and clampedAngle > this.minAngle):
+		if(this.minToMaxAngleVector < 0 and clampedAngle > this.minAngle):
 			clampedAngle = clampedAngle - 360
 		
 		rate = (clampedAngle - this.minAngle) / this.minToMaxAngleVector
