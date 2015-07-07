@@ -115,10 +115,17 @@ class JSpiderJoint:
 		
 		# while(clampedAngle > this.minAngle):
 		#	clampedAngle = clampedAngle - 360
+		if(this.minToMaxAngleVector < 0 and clampedAngle < this.minAngle):
+			clampedAngle = clampedAngle + 360
+		
 		rate = (clampedAngle - this.minAngle) / this.minToMaxAngleVector
 		print "angle " + str(clampedAngle) + " converted to rate " + str(rate)
 		return rate
 		
+	
+	
+
+	
 	def stop(this):
 		if this.isPinPort(this.port):
 			call("echo " + str(-this.port) + "=" + str(0) + ">/dev/servoblaster", shell=True)
