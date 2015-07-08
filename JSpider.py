@@ -406,7 +406,7 @@ class JSpider:
 		50, 300, 80, 250, 190, 30, 
 		False, False, True)
 		this.br_leg = JSpiderLeg(13, 15, -4, 50, 500, 100, 700, 50, 250,
-		240, 140, 280, 80, 30, 190
+		240, 140, 280, 80, 30, 190,
 		False, True, False)
 		
 		this.legs = [[this.fl_leg, this.fr_leg] , [this.cl_leg, this.cr_leg], [this.bl_leg, this.br_leg]]
