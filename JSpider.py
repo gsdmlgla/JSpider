@@ -394,6 +394,8 @@ class SpiderPose:
 	def GetPoseByName(name):
 		if(name == "idle1"):
 			return SpiderPose.GetIdlePose1()
+		elif(name == "idle2"):
+			return SpiderPose.GetIdlePose2()
 		raise IndexError("Pose name " + str(name) + " is invalid")
 		
 	
@@ -405,6 +407,14 @@ class SpiderPose:
 			[8, 1, -5], [-8, 1, -5]
 		)
 		return idle1
+	@staticmethod
+	def GetIdlePose2():
+		idle2 = SpiderPose(
+			[8, 1, -12], [-8, 1, -12],
+			[8, 1, -12], [-8, 1, -12], 
+			[8, 1, -12], [-8, 1, -12]
+		)
+		return idle2
 	
 	
 class JSpider:
