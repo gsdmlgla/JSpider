@@ -409,7 +409,7 @@ class JSpider:
 		90, 330, 80, 260, 350, 40, 
 		False, False, False)
 		this.fr_leg = JSpiderLeg(1, 3, 5, 50, 500, 100, 600, 100, 700, 
-		210, 85, 265, 60, 20, 260, 
+		210, 85, 265, 60, 20, 205, 
 		False, True, False)
 		this.cl_leg = JSpiderLeg(6, 8, 10, 300, 680, 200, 700, 130, 700, 
 		65, 300, 80, 260, 200, 35, 
