@@ -102,10 +102,9 @@ class JSpiderJoint:
 		
 	
 	def setCurrentPower(this, inputPower):
-		currentPower = inputPower
-		print "currentPower set to " + str(currentPower)
-		currentRate = this.convertPowerToRate(currentPower)
-		currentAngle = this.convertRateToAngle(currentRate)
+		this.currentPower = inputPower
+		this.currentRate = this.convertPowerToRate(this.currentPower)
+		this.currentAngle = this.convertRateToAngle(this.currentRate)
 	
 	def convertRateToPower(this, rate):
 		clampedRate = max(min(rate, 1), 0)
@@ -171,11 +170,13 @@ class JSpiderJoint:
 		dividedRateVector = rateVector / subdivide
 		delayDuration = duration / subdivide
 		
+		# this is LOCAL
 		currentRate = startRate
 		# this is bad because it will block other operations.
 		# should be async operation... or have general loop. 
 		for x in range(0, int(subdivide)):
 			time.sleep(delayDuration)
+			# this is LOCAL TOO
 			currentRate = currentRate + dividedRateVector
 			this.moveByRate(currentRate)
 		
