@@ -103,6 +103,7 @@ class JSpiderJoint:
 	
 	def setCurrentPower(this, inputPower):
 		currentPower = inputPower
+		print "currentPower set to " + str(currentPower)
 		currentRate = this.convertPowerToRate(currentPower)
 		currentAngle = this.convertRateToAngle(currentRate)
 	
