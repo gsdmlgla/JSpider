@@ -191,18 +191,33 @@ class JSpiderJoint:
 	
 	#clamps given angle to max and min angle
 	def clampAngle(this, angleInDegree):
+		originalAngleInDegree = angleInDegree
 		angleInDegree = Angle.sanctify(angleInDegree)
+		print "angleInDegree " + str(originalAngleInDegree) + " was sanctified to " + str(angleInDegree)
 		if(this.isAngleInRange(angleInDegree) is False):
 			forwardDistanceFromMinAngle = Angle.getAngleDistanceInForward(angleInDegree, this.minAngle)
 			forwardDistanceFromMaxAngle = Angle.getAngleDistanceInForward(angleInDegree, this.maxAngle)
 			backwardDistanceFromMinAngle = Angle.getAngleDistanceInBackward(angleInDegree, this.minAngle)
 			backwardDistanceFromMaxAngle = Angle.getAngleDistanceInBackward(angleInDegree, this.maxAngle)
 			
+			print "forwardDistanceFromMinAngle: " + str(forwardDistanceFromMinAngle)
+			print "forwardDistanceFromMaxAngle: " + str(forwardDistanceFromMaxAngle)
+			print "backwardDistanceFromMinAngle: " + str(backwardDistanceFromMinAngle)
+			print "backwardDistanceFromMaxAngle: " + str(backwardDistanceFromMaxAngle)
+			
 			distanceFromMinAngle = min(forwardDistanceFromMinAngle, backwardDistanceFromMinAngle)
 			distanceFromMaxAngle = min(forwardDistanceFromMaxAngle, backwardDistanceFromMaxAngle)
 			
-			return this.minAngle if distanceFromMinAngle < distanceFromMaxAngle else this.maxAngle
+			print "distanceFromMinAngle: " + str(distanceFromMinAngle)
+			print "distanceFromMaxAngle: " + str(distanceFromMaxAngle)
+			
+			result = this.minAngle if distanceFromMinAngle < distanceFromMaxAngle else this.maxAngle
+			
+			print "result: " + str(result)
+			
+			return result
 		else:
+			print "angle in degree already clamped"
 			return angleInDegree
 	
 
