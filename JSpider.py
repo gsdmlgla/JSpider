@@ -86,7 +86,7 @@ class JSpiderJoint:
 	
 	def move(this, inputPower):
 		power = min(max(inputPower, this.minimumPower), this.maximumPower)
-		this.setCurrentPower(inputPower)
+		this.setCurrentPower(power)
 		if this.isPinPort(this.port):
 			call("echo " + str(-this.port) + "=" + str(power) + ">/dev/servoblaster", shell=True)
 		else:
