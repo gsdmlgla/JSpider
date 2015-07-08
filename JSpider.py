@@ -92,6 +92,15 @@ class JSpiderJoint:
 		else:
 			pwm.setPWM(this.port, 0, power)
 	
+	def getInfo(this):
+		print "-------------"
+		print "port: " + str(port)
+		print "currentPower: " + str(currentPower)
+		print "currentAngle: " + str(currentAngle)
+		print "currentRate: " + str(currentRate)
+		print "-------------"
+		
+	
 	def setCurrentPower(this, inputPower):
 		currentPower = inputPower
 		currentRate = this.convertPowerToRate(currentPower)
@@ -247,6 +256,11 @@ class JSpiderLeg:
 		if index is 2:
 			return this.tip
 		raise IndexError("JSpiderLeg only has 3 joints")
+		
+	def getInfo(this):
+		this.bas.getInfo()
+		this.mid.getInfo()
+		this.tip.getInfo()
 	
 	def moveByEndEffectorPosition(this, EEPosition):
 		# assumes that root position is at 0 0 0, 
@@ -460,6 +474,13 @@ class JSpider:
 		this.legs = [[this.fl_leg, this.fr_leg] , [this.cl_leg, this.cr_leg], [this.bl_leg, this.br_leg]]
 	
 	
+	def getInfo(this):
+		this.fl_leg.getInfo()
+		this.fr_leg.getInfo()
+		this.cl_leg.getInfo()
+		this.cr_leg.getInfo()
+		this.bl_leg.getInfo()
+		this.br_leg.getInfo()
 	
 	def __getitem__(this, index):
 		return this.legs[index];
@@ -517,7 +538,15 @@ class CommandLineInterpreter:
 	def moveByPose(this, params):
 		val = params[1]
 		this.spidy.moveByPose(SpiderPose.GetPoseByName(val))
-		
+	
+	def getLegInfo(this):
+		this.spidy[this.legId].getInfo()
+	
+	def getJointInfo(this):
+		this.spidy[this.legId][this.jointId].getInfo()
+	
+	def getInfo(this):
+		this.spidy.getInfo()
 	
 	def setLegId(this, params):
 		val = int(params[1])
@@ -547,6 +576,12 @@ class CommandLineInterpreter:
 			this.moveSpiderLegTip(params)
 		elif option == "setpose" or option == "sp":
 			this.moveByPose(params)
+		elif option == "getleginfo" or option == "gli":
+			this.getLegInfo()
+		elif option == "getjointinfo" or option == "gji":
+			this.getJointInfo()
+		elif option == "getinfo" or option == "gi":
+			this.getInfo()
 		elif option == "setlegid" or option == "setleg" or option == "sl" or option == "leg":
 			this.setLegId(params)
 		elif option == "setjointid" or option == "setjoint" or option == "sj" or option == "joint":
