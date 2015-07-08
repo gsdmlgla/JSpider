@@ -369,7 +369,40 @@ class Vector3:
 	@staticmethod
 	def length(vec):
 		return math.sqrt(vec[0] * vec[0] + vec[1] * vec[1] + vec[2] * vec[2])
+
+	
+# pose represents a single configuration for ALL legs. 
+class SpiderPose:
+	fl = [ 0, 0, 0 ]
+	fr = [ 0, 0, 0 ]
+	cl = [ 0, 0, 0 ]
+	cr = [ 0, 0, 0 ]
+	bl = [ 0, 0, 0 ]
+	br = [ 0, 0, 0 ]
+	
+	def __init__(this, fl, fr, cl, cr, bl, br):
+		this.fl = fl
+		this.fr = fr
+		this.cl = cl
+		this.cr = cr
+		this.bl = bl
+		this.br = br
+	
+	@staticmethod
+	def GetPoseByName(name):
+		if(name == "idle1"):
+			return SpiderPose.GetIdlePose1()
+		raise IndexError("Pose name " + str(name) + " is invalid")
 		
+	
+	@staticmethod
+	def GetIdlePose1():
+		idle1 = SpiderPose(
+			[8, 1, -5], [-8, 1, -5],
+			[8, 1, -5], [-8, 1, -5], 
+			[8, 1, -5], [-8, 1, -5]
+		)
+		return idle1
 	
 	
 class JSpider:
@@ -377,8 +410,8 @@ class JSpider:
 	fr_leg = 0
 	cl_leg = 0
 	cr_leg = 0
-	br_leg = 0
 	bl_leg = 0
+	br_leg = 0
 	
 	legs = [ ]
 	
@@ -433,7 +466,14 @@ class JSpider:
 		
 	def stop(this):
 		this.fl_leg[0].stop()
-		
+	
+	def moveByPose(this, pose):
+		this.fl_leg.moveByEndEffectorPosition(pose.fl)
+		this.fr_leg.moveByEndEffectorPosition(pose.fr)
+		this.cl_leg.moveByEndEffectorPosition(pose.cl)
+		this.cr_leg.moveByEndEffectorPosition(pose.cr)
+		this.bl_leg.moveByEndEffectorPosition(pose.bl)
+		this.br_leg.moveByEndEffectorPosition(pose.br)
 		
 #Constants (servo PWM values). Servo positions:
 #FRONT: 0=left base, 1=right base, 2=left mid, 3=right mid, 4=left tip, 5=right tip
@@ -473,7 +513,12 @@ class CommandLineInterpreter:
 		val3 = float(params[3])
 		val = [val1, val2, val3]
 		this.spidy[this.rowId][this.legId].moveByEndEffectorPosition(val)
+	
+	def moveByPose(this, params):
+		val = params[1]
+		this.spidy.moveByPose(SpiderPose.GetPoseByName(val))
 		
+	
 	def setLegId(this, params):
 		val = int(params[1])
 		this.legId = val
@@ -512,6 +557,9 @@ class CommandLineInterpreter:
 	def listen(this):
 		while(True):
 			this.interpretCommand(raw_input("Enter Command: "))
+
+			
+			
 
 spidy = JSpider()
 cmd = CommandLineInterpreter(spidy)
