@@ -94,10 +94,10 @@ class JSpiderJoint:
 	
 	def getInfo(this):
 		print "-------------"
-		print "port: " + str(port)
-		print "currentPower: " + str(currentPower)
-		print "currentAngle: " + str(currentAngle)
-		print "currentRate: " + str(currentRate)
+		print "port: " + str(this.port)
+		print "currentPower: " + str(this.currentPower)
+		print "currentAngle: " + str(this.currentAngle)
+		print "currentRate: " + str(this.currentRate)
 		print "-------------"
 		
 	
