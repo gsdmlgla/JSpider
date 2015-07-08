@@ -545,6 +545,8 @@ class CommandLineInterpreter:
 			this.moveSpiderGraduallyByAngle(params)
 		elif option == "movetip" or option == "mt":
 			this.moveSpiderLegTip(params)
+		elif option == "setpose" or option == "sp":
+			this.moveByPose(params)
 		elif option == "setlegid" or option == "setleg" or option == "sl" or option == "leg":
 			this.setLegId(params)
 		elif option == "setjointid" or option == "setjoint" or option == "sj" or option == "joint":
