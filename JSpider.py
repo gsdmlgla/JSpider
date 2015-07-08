@@ -451,7 +451,7 @@ class JSpider:
 		False, True, False)
 		'''
 		this.fl_leg = JSpiderLeg(0, 2, 4, 300, 650, 200, 700, 100, 600, 
-		90, 330, 80, 260, 350, 0, 
+		90, 330, 80, 260, 190, 0, 
 		False, False, True)
 		this.fr_leg = JSpiderLeg(1, 3, 5, 50, 500, 100, 600, 100, 700, 
 		210, 85, 265, 60, 20, 205, 
