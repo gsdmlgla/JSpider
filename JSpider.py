@@ -104,7 +104,6 @@ class JSpiderJoint:
 		return max(min(rate, 1), 0)
 	
 	def convertRateToPower(this, clampedRate):
-		clampedRate = this.clampRate(rate)
 		return (int(this.minimumPower + this.minToMaxPowerVector * clampedRate))
 	
 	def convertAngleToRate(this, clampedAngle):
