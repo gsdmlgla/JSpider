@@ -86,7 +86,7 @@ class JSpiderJoint:
 	
 	def move(this, inputPower):
 		power = min(max(inputPower, this.minimumPower), this.maximumPower)
-		this.setCurrentPower(power)
+		this.currentPower = power;
 		if this.isPinPort(this.port):
 			call("echo " + str(-this.port) + "=" + str(power) + ">/dev/servoblaster", shell=True)
 		else:
@@ -99,29 +99,15 @@ class JSpiderJoint:
 		print "currentAngle: " + str(this.currentAngle)
 		print "currentRate: " + str(this.currentRate)
 		print "-------------"
-		
 	
-	def setCurrentPower(this, inputPower):
-		this.currentPower = inputPower
-		this.currentRate = this.convertPowerToRate(this.currentPower)
-		this.currentAngle = this.convertRateToAngle(this.currentRate)
+	def clampRate(this, rate):
+		return max(min(rate, 1), 0)
 	
-	def convertRateToPower(this, rate):
-		clampedRate = max(min(rate, 1), 0)
+	def convertRateToPower(this, clampedRate):
+		clampedRate = clampRate(rate)
 		return (int(this.minimumPower + this.minToMaxPowerVector * clampedRate))
 	
-	def convertPowerToRate(this, power):
-		clampedRate = (this.minimumPower - power) / this.minToMaxPowerVector
-		return clampedRate;
-	
-	def convertRateToAngle(this, rate):
-		clampedAngle = rate * this.minToMaxAngleVector + this.minAngle
-		return clampedAngle
-	
 	def convertAngleToRate(this, angleInDegree):
-		clampedAngle = this.clampAngle(angleInDegree)
-		print "angle " + str(angleInDegree) + " clamped to " + str(clampedAngle)
-		
 		# while(clampedAngle > this.minAngle):
 		#	clampedAngle = clampedAngle - 360
 		if(this.minToMaxAngleVector > 0 and clampedAngle < this.minAngle):
@@ -134,9 +120,6 @@ class JSpiderJoint:
 		return rate
 		
 	
-	
-
-	
 	def stop(this):
 		if this.isPinPort(this.port):
 			call("echo " + str(-this.port) + "=" + str(0) + ">/dev/servoblaster", shell=True)
@@ -147,9 +130,13 @@ class JSpiderJoint:
 		return port < 0
 	
 	def moveByRate(this, rate):
+		rate = this.clampRate(rate)
+		this.currentRate = rate;
 		this.move(this.convertRateToPower(rate))
 	
 	def moveByAngle(this, angleInDegree):
+		angleInDegree = this.clampAngle(angleInDegree)
+		this.currentAngle = angleInDegree
 		rate = this.convertAngleToRate(angleInDegree)
 		this.moveByRate(rate)
 	
