@@ -540,10 +540,10 @@ class CommandLineInterpreter:
 		this.spidy.moveByPose(SpiderPose.GetPoseByName(val))
 	
 	def getLegInfo(this):
-		this.spidy[this.legId].getInfo()
+		this.spidy[this.rowId][this.legId].getInfo()
 	
 	def getJointInfo(this):
-		this.spidy[this.legId][this.jointId].getInfo()
+		this.spidy[this.rowId][this.legId][this.jointId].getInfo()
 	
 	def getInfo(this):
 		this.spidy.getInfo()
