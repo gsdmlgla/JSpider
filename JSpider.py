@@ -446,9 +446,9 @@ class SpiderPose:
 	@staticmethod
 	def GetIdlePose():
 		pose = SpiderPose(
-			[8, 2, -12], [-8, 2, -12],
+			[8, 5, -12], [-8, 5, -12],
 			[8, 0, -12], [-8, 0, -12], 
-			[8, -2, -12], [-8, -2, -12]
+			[8, -5, -12], [-8, -5, -12]
 		)
 		return pose
 		
