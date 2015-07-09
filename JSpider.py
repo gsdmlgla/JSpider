@@ -434,7 +434,12 @@ class SpiderPose:
 	def GetPoseByName(name):
 		if(name == "idle"):
 			return SpiderPose.GetIdlePose()
-		elif(name == "idle2"):
+		elif(name == "forward1"):
+			return SpiderPose.GetForward1Pose()
+		elif(name == "forward2"):
+			return SpiderPose.GetForward2Pose()
+		elif(name == "forward3"):
+			return SpiderPose.GetForward3Pose()
 			
 		raise IndexError("Pose name " + str(name) + " is invalid")
 		
