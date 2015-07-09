@@ -418,16 +418,16 @@ class SpiderPose:
 			this.br = Vector3.add(this.br, vec)
 	
 	def ModifyJigJagLeft(this, vec):
-		ModifyPose(True, False, False, True, True, False, vec)
+		this.ModifyPose(True, False, False, True, True, False, vec)
 	
 	def ModifyJigJagRight(this, vec):
-		ModifyPose(False, True, True, False, False, True, vec)
+		this.ModifyPose(False, True, True, False, False, True, vec)
 		
 	def ModifyLeft(this, vec):
-		ModifyPose(True, False, True, False, True, False, vec)
+		this.ModifyPose(True, False, True, False, True, False, vec)
 	
 	def ModifyRight(this, vec):
-		ModifyPose(False, True, False, True, False, True, vec)
+		this.ModifyPose(False, True, False, True, False, True, vec)
 	
 	
 	@staticmethod
