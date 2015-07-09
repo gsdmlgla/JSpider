@@ -458,7 +458,7 @@ class SpiderPose:
 		# lift your legs and go forward
 		pose.ModifyJigJagLeft( [ 0, 3, 7 ] )
 		# move your other legs backward
-		pose.ModifyJigJagRight( [ 0, -6, 0 ] )
+		# pose.ModifyJigJagRight( [ 0, -6, 0 ] )
 		return pose
 	
 	@staticmethod
