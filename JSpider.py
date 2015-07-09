@@ -473,6 +473,11 @@ class SpiderPose:
 		pose = SpiderPose.GetForward2Pose()
 		pose.ModifyJigJagLeft( [ 0, 0, -7 ] )
 		return pose
+	
+	@staticmethod
+	def GetForward4Pose():
+		pose = SpiderPose.GetForward3Pose()
+		pose.ModifyJigJagLeft( [ 0, -6, 0 ] )
 		
 	
 class JSpider:
