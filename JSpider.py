@@ -328,15 +328,15 @@ class Vector3:
 		
 	@staticmethod
 	def add(vec1, vec2):
-		return { vec1[0] + vec2[0], vec1[1] + vec[1], vec1[2] + vec2[2] }
+		return Vector3(vec1[0] + vec2[0], vec1[1] + vec[1], vec1[2] + vec2[2])
 	
 	@staticmethod
 	def scale(v, scale):
-		return [ v[0] * scale, v[1] * scale, v[2] * scale ]
+		return Vector3( v[0] * scale, v[1] * scale, v[2] * scale )
 	
 	@staticmethod
 	def subtract(vec1, vec2):
-		return [ vec1[0] - vec2[0], vec1[1] - vec2[1], vec1[2] - vec2[2] ]
+		return Vector3( vec1[0] - vec2[0], vec1[1] - vec2[1], vec1[2] - vec2[2] )
 	
 	@staticmethod
 	def direction(origin, destination):
@@ -393,32 +393,81 @@ class SpiderPose:
 		this.bl = bl
 		this.br = br
 	
-	@staticmethod
-	def GetPoseByName(name):
-		if(name == "idle1"):
-			return SpiderPose.GetIdlePose1()
-		elif(name == "idle2"):
-			return SpiderPose.GetIdlePose2()
-		raise IndexError("Pose name " + str(name) + " is invalid")
+	def Add(this, fl, fr, cl, cr, bl, br):
+		this.fl = Vector3.add(this.fl, fl)
+		this.fr = Vector3.add(this.fr, fr)
+		this.cl = Vector3.add(this.cl, cl)
+		this.cr = Vector3.add(this.cr, cr)
+		this.bl = Vector3.add(this.bl, bl)
+		this.br = Vector3.add(this.br, br)
+	
+	
+	# fl fr cr cl br bl are bool
+	def ModifyPose(this, fl, fr, cl, cr, bl, br, vec):
+		if(fl):
+			this.fl = Vector3.add(this.fl, vec)
+		if(fr):
+			this.fr = Vector3.add(this.fr, vec)
+		if(cl):
+			this.cl = Vector3.add(this.cl, vec)
+		if(cr):
+			this.cr = Vector3.add(this.cr, vec)
+		if(bl):
+			this.bl = Vector3.add(this.bl, vec)
+		if(br):
+			this.br = Vector3.add(this.br, vec)
+	
+	def ModifyJigJagLeft(this, vec):
+		ModifyPose(True, False, False, True, True, False, vec)
+	
+	def ModifyJigJagRight(this, vec):
+		ModifyPose(False, True, True, False, False, True, vec)
 		
+	def ModifyLeft(this, vec):
+		ModifyPose(True, False, True, False, True, False, vec)
+	
+	def ModifyRight(this, vec):
+		ModifyPose(False, True, False, True, False, True, vec)
+	
 	
 	@staticmethod
-	def GetIdlePose1():
-		idle1 = SpiderPose(
-			[8, 1, -5], [-8, 1, -5],
-			[8, 1, -5], [-8, 1, -5], 
-			[8, 1, -5], [-8, 1, -5]
-		)
-		return idle1
+	def GetPoseByName(name):
+		if(name == "idle"):
+			return SpiderPose.GetIdlePose()
+		elif(name == "idle2"):
+			
+		raise IndexError("Pose name " + str(name) + " is invalid")
+		
 	@staticmethod
-	def GetIdlePose2():
-		idle2 = SpiderPose(
+	def GetIdlePose():
+		pose = SpiderPose(
 			[8, 2, -12], [-8, 2, -12],
 			[8, 0, -12], [-8, 0, -12], 
 			[8, -2, -12], [-8, -2, -12]
 		)
-		return idle2
+		return idle
+		
+	@staticmethod
+	def GetForward1Pose():
+		pose = SpiderPose.GetIdlePose()
+		# lift your legs and go forward
+		pose.ModifyJigJagLeft( [ 0, 2, 5 ] )
+		# move your other legs backward
+		pose.ModifyJigJagRight( [ 0, -2, 0 ] )
+		return pose
 	
+	@staticmethod
+	def GetForward2Pose():
+		pose = SpiderPose.GetForward1Pose()
+		# put your legs down and go forward
+		pose.ModifyJigJagLeft( [ 0, 2, -5 ] )
+		
+	@staticmethod
+	def GetForward3Pose():
+		pose = SpiderPose.GetForward2Pose()
+		pose.ModifyJigJagLeft ( [ 0, -4, 0 ] )
+		pose.ModifyJigJagRight( [ 0, 2, 0 ] )
+		
 	
 class JSpider:
 	fl_leg = 0
