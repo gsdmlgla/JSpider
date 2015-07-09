@@ -465,7 +465,7 @@ class SpiderPose:
 	def GetForward2Pose():
 		pose = SpiderPose.GetForward1Pose()
 		# put your legs down and go forward
-		pose.ModifyJigJagLeft( [ 0, 3, -7 ] )
+		pose.ModifyJigJagLeft( [ 0, 3, 0 ] )
 		return pose
 		
 	@staticmethod
