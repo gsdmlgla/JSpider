@@ -456,23 +456,23 @@ class SpiderPose:
 	def GetForward1Pose():
 		pose = SpiderPose.GetIdlePose()
 		# lift your legs and go forward
-		pose.ModifyJigJagLeft( [ 0, 2, 5 ] )
+		pose.ModifyJigJagLeft( [ 0, 4, 8 ] )
 		# move your other legs backward
-		pose.ModifyJigJagRight( [ 0, -2, 0 ] )
+		pose.ModifyJigJagRight( [ 0, -8, 0 ] )
 		return pose
 	
 	@staticmethod
 	def GetForward2Pose():
 		pose = SpiderPose.GetForward1Pose()
 		# put your legs down and go forward
-		pose.ModifyJigJagLeft( [ 0, 2, -5 ] )
+		pose.ModifyJigJagLeft( [ 0, 4, -8 ] )
 		return pose
 		
 	@staticmethod
 	def GetForward3Pose():
 		pose = SpiderPose.GetForward2Pose()
-		pose.ModifyJigJagLeft ( [ 0, -4, 0 ] )
-		pose.ModifyJigJagRight( [ 0, 2, 0 ] )
+		pose.ModifyJigJagLeft ( [ 0, -8, 0 ] )
+		pose.ModifyJigJagRight( [ 0, 4, 0 ] )
 		return pose
 		
 	
