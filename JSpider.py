@@ -466,12 +466,14 @@ class SpiderPose:
 		pose = SpiderPose.GetForward1Pose()
 		# put your legs down and go forward
 		pose.ModifyJigJagLeft( [ 0, 2, -5 ] )
+		return pose
 		
 	@staticmethod
 	def GetForward3Pose():
 		pose = SpiderPose.GetForward2Pose()
 		pose.ModifyJigJagLeft ( [ 0, -4, 0 ] )
 		pose.ModifyJigJagRight( [ 0, 2, 0 ] )
+		return pose
 		
 	
 class JSpider:
