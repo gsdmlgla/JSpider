@@ -440,7 +440,9 @@ class SpiderPose:
 			return SpiderPose.GetForward2Pose()
 		elif(name == "forward3"):
 			return SpiderPose.GetForward3Pose()
-			
+		elif(name == "forward4"):
+			return SpiderPose.GetForward4Pose()
+		
 		raise IndexError("Pose name " + str(name) + " is invalid")
 		
 	@staticmethod
@@ -478,7 +480,7 @@ class SpiderPose:
 	def GetForward4Pose():
 		pose = SpiderPose.GetForward3Pose()
 		pose.ModifyJigJagLeft( [ 0, -6, 0 ] )
-		
+		return pose
 	
 class JSpider:
 	fl_leg = 0
