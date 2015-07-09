@@ -450,7 +450,7 @@ class SpiderPose:
 			[8, 0, -12], [-8, 0, -12], 
 			[8, -2, -12], [-8, -2, -12]
 		)
-		return idle
+		return pose
 		
 	@staticmethod
 	def GetForward1Pose():
